@@ -49,7 +49,7 @@ def export_db2():
 	
 		
 	iniz_bck_time=time.time()
-	curs.execute("SELECT * FROM DIGI.TABUTE_CLIPOT")
+	curs.execute("SELECT * FROM DIGI.TABUTE_CLIB2B")
 	rows=curs.fetchall()
 	file = open(backup,"w") 
 	for row in rows:
@@ -165,7 +165,7 @@ def sydb2():
 			accesso_b2b='0'
 		email_b2b=str(row[14]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		note=str(row[15]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
-		note=note[:250]
+		note=note[:254]
 		indirizzo_sede=str(row[16]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		provincia_sede=str(row[17]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		comune_sede=str(row[18]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
@@ -191,14 +191,14 @@ def sydb2():
 			data_acquisizione='2018-01-01 00:00:00'
 		#############################################FINE DATI DA SYBASE#
 		
-		curs.execute("SELECT DG_PARTITAIVA FROM DIGI.TABUTE_CLIPOT WHERE DG_PARTITAIVA='"+p_iva+"' AND DG_CF='"+cod_fiscale+"'")
+		curs.execute("SELECT DG_PARTITAIVA FROM DIGI.TABUTE_CLIB2B WHERE MK_IDENTIFIC_B2B='"+id+"'")
 		esisteibm=len(curs.fetchall())#lunghezza array estratto, conto le righe insomma...
 		if esisteibm>0: #SE GIA ESISTE AGGIORNO I DATI
-			query="UPDATE DIGI.TABUTE_CLIPOT "
+			query="UPDATE DIGI.TABUTE_CLIB2B "
 			query=query+"SET MK_IDENTIFIC_B2B='"+id+"',MK_RAG_SOC='"+ragione_sociale+"',DG_PARTITAIVA='"+p_iva+"',DG_CF='"+cod_fiscale+"',MK_NUM_TELEF_L16='"+telefono+"',MK_NUM_FAX_6='"+fax+"',DG_E_MAIL='"+email+"',MK_BANCA_L48='"+banca+"',MK_COORDIN_BANCA='"+coordinate_banca+"',DG_CONPAG='"+pagamento+"',MK_IMPORTO_FIDO_1='"+fido+"',DG_DIVISIONE='"+divisione+"',MK_ACCESSO_B2B='"+accesso_b2b+"',DG_E_MAIL1='"+email+"',MK_DESCR_NOTE='"+note+"',"
 			query=query+"MK_INDIRIZZO_SEDE='"+indirizzo_sede+"',MK_PROVINCIA_SEDE='"+provincia_sede+"',MK_PROV_SIGLA_SEDE='"+sigla_provincia_sede+"',MK_COMUNE_SEDE='"+comune_sede+"',MK_CAP_SEDE='"+cap_sede+"',MK_COD_PAESE_SEDE='"+codice_paese_sede+"',"
 			query=query+"MK_INDIRIZZO_SPED='"+indirizzo_spedizione+"',MK_PROVINCIA_SPED='"+provincia_spedizione+"',MK_PROV_SIGLA_SPED='"+sigla_provincia_spedizione+"',MK_COMUNE_SPED='"+comune_spedizione+"',MK_CAP_SPED='"+cap_spedizione+"',MK_COD_PAESE_SPED='"+codice_paese_spedizione+"',"
-			query=query+"MK_AGENTE='"+agente+"',MK_DT_IMMIS_B2B='"+data_acquisizione+"',MK_DATA_INS='"+data_registrazione+"' WHERE DG_PARTITAIVA='"+p_iva+"' AND DG_CF='"+cod_fiscale+"'"
+			query=query+"MK_AGENTE='"+agente+"',MK_DT_IMMIS_B2B='"+data_acquisizione+"' WHERE MK_IDENTIFIC_B2B='"+id+"'"
 			try:
 				curs.execute(query)
 			except:
@@ -206,7 +206,7 @@ def sydb2():
 			curs.execute("commit")
 			countmodificate=countmodificate+1
 		else:#ALTRIMENTI LO INSERISCO
-			query="INSERT INTO DIGI.TABUTE_CLIPOT (DG_C_TRACC_REC,DG_C_SOC,DG_C_DIVS,DG_C_VERS,"
+			query="INSERT INTO DIGI.TABUTE_CLIB2B (DG_C_TRACC_REC,DG_C_SOC,DG_C_DIVS,DG_C_VERS,"
 			query=query+"DG_PARTITAIVA,DG_CF,MK_IDENTIFIC_B2B) "
 			query=query+"VALUES ('CLIB2B','0100','00','00','"+p_iva+"','"+cod_fiscale+"','"+id+"')"
 			try:##INSERISCO SOLO PIVA E CF POI AGGIORNO
@@ -214,11 +214,11 @@ def sydb2():
 			except:
 				print(query)
 			curs.execute("commit")
-			query="UPDATE DIGI.TABUTE_CLIPOT "
+			query="UPDATE DIGI.TABUTE_CLIB2B "
 			query=query+"SET MK_IDENTIFIC_B2B='"+id+"',MK_RAG_SOC='"+ragione_sociale+"',DG_PARTITAIVA='"+p_iva+"',DG_CF='"+cod_fiscale+"',MK_NUM_TELEF_L16='"+telefono+"',MK_NUM_FAX_6='"+fax+"',DG_E_MAIL='"+email+"',MK_BANCA_L48='"+banca+"',MK_COORDIN_BANCA='"+coordinate_banca+"',DG_CONPAG='"+pagamento+"',MK_IMPORTO_FIDO_1='"+fido+"',DG_DIVISIONE='"+divisione+"',MK_ACCESSO_B2B='"+accesso_b2b+"',DG_E_MAIL1='"+email+"',MK_DESCR_NOTE='"+note+"',"
 			query=query+"MK_INDIRIZZO_SEDE='"+indirizzo_sede+"',MK_PROVINCIA_SEDE='"+provincia_sede+"',MK_PROV_SIGLA_SEDE='"+sigla_provincia_sede+"',MK_COMUNE_SEDE='"+comune_sede+"',MK_CAP_SEDE='"+cap_sede+"',MK_COD_PAESE_SEDE='"+codice_paese_sede+"',"
 			query=query+"MK_INDIRIZZO_SPED='"+indirizzo_spedizione+"',MK_PROVINCIA_SPED='"+provincia_spedizione+"',MK_PROV_SIGLA_SPED='"+sigla_provincia_spedizione+"',MK_COMUNE_SPED='"+comune_spedizione+"',MK_CAP_SPED='"+cap_spedizione+"',MK_COD_PAESE_SPED='"+codice_paese_spedizione+"',"
-			query=query+"MK_AGENTE='"+agente+"',MK_DT_IMMIS_B2B='"+data_acquisizione+"',MK_DATA_INS='"+data_registrazione+"' WHERE DG_PARTITAIVA='"+p_iva+"' AND DG_CF='"+cod_fiscale+"'"
+			query=query+"MK_AGENTE='"+agente+"',MK_DT_IMMIS_B2B='"+data_acquisizione+"' WHERE MK_IDENTIFIC_B2B='"+id+"'"
 			try:##INSERISCO SOLO PIVA E CF POI AGGIORNO
 				curs.execute(query)
 			except:
