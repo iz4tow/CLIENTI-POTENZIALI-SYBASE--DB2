@@ -4,6 +4,7 @@ import jaydebeapi
 import jpype
 import time
 import os 
+import decimal
 
 start_time = time.time()
 

@@ -5,6 +5,7 @@ import jpype
 import time
 import os 
 from appJar import gui
+import decimal
 
 start_time = time.time()
 
