@@ -201,7 +201,8 @@ def sydb2():
 			query=query+"MK_INDIRIZZO_SPED='"+indirizzo_spedizione+"',MK_PROVINCIA_SPED='"+provincia_spedizione+"',MK_PROV_SIGLA_SPED='"+sigla_provincia_spedizione+"',MK_COMUNE_SPED='"+comune_spedizione+"',MK_CAP_SPED='"+cap_spedizione+"',MK_COD_PAESE_SPED='"+codice_paese_spedizione+"',"
 			query=query+"MK_AGENTE='"+agente+"',MK_DT_IMMIS_B2B='"+data_acquisizione+"' WHERE MK_IDENTIFIC_B2B='"+id+"'"
 			try:
-				curs.execute(query)
+				#curs.execute(query)
+				print ("SALTA")
 			except:
 				print(query)
 			curs.execute("commit")
@@ -242,7 +243,7 @@ def sydb2():
 	countnuove=str(countnuove)
 	countmodificate=str(countmodificate)
 	
-	app.infoBox("IMPORTAZIONE COMPLETATA", "RIGHE SU SYBASE IQ: "+daimportare+"\nRIGHE INSERITE SU DB2: "+countnuove+"\nRIGHE MODIFICATE SU DB2: "+countmodificate, parent=None)
+	app.infoBox("IMPORTAZIONE COMPLETATA", "RIGHE SU SYBASE IQ: "+daimportare+"\nRIGHE INSERITE SU DB2: "+countnuove+"\nRIGHE SALTATE SU DB2: "+countmodificate, parent=None)
 	app.showButton("Esegui")
 	app.showButton("Dump DB2")
 	app.showButton("Dump SYBASEIQ")

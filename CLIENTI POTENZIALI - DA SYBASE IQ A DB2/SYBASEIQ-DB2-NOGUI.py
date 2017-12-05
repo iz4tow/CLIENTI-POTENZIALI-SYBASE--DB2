@@ -87,7 +87,8 @@ for row in rows: #per ogni riga
 		query=query+"MK_INDIRIZZO_SPED='"+indirizzo_spedizione+"',MK_PROVINCIA_SPED='"+provincia_spedizione+"',MK_PROV_SIGLA_SPED='"+sigla_provincia_spedizione+"',MK_COMUNE_SPED='"+comune_spedizione+"',MK_CAP_SPED='"+cap_spedizione+"',MK_COD_PAESE_SPED='"+codice_paese_spedizione+"',"
 		query=query+"MK_AGENTE='"+agente+"',MK_DT_IMMIS_B2B='"+data_acquisizione+"' WHERE MK_IDENTIFIC_B2B='"+id+"'"
 		try:
-			curs.execute(query)
+			#curs.execute(query)
+			print ("SALTO ESISTENTE")
 		except:
 			print(query)
 		curs.execute("commit")
@@ -118,5 +119,5 @@ tempo=str(int(end_time-start_time))
 daimportare=str(daimportare)
 countnuove=str(countnuove)
 countmodificate=str(countmodificate)
-print ("IMPORTAZIONE COMPLETATA", "RIGHE SU SYBASE IQ: "+daimportare+"\nRIGHE INSERITE SU DB2: "+countnuove+"\nRIGHE MODIFICATE SU DB2: "+countmodificate)
+print ("IMPORTAZIONE COMPLETATA", "RIGHE SU SYBASE IQ: "+daimportare+"\nRIGHE INSERITE SU DB2: "+countnuove+"\nRIGHE SALTATE SU DB2: "+countmodificate)
 print("TEMPO PER IL PASSAGGIO: "+tempo+" secondi")
