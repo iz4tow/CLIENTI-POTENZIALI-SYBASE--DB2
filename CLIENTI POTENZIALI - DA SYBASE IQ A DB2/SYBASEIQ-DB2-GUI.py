@@ -149,11 +149,19 @@ def sydb2():
 		ragione_sociale=str(row[2]).strip().replace("'"," ") #TOGLO GLI SPAZI BIANCHI
 		p_iva=str(row[3]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		cod_fiscale=str(row[4]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
+		if cod_fiscale.upper()=='NONE':
+			cod_fiscale=" "
 		telefono=str(row[5]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		fax=str(row[6]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
+		if fax.upper()=='NONE':
+			fax=" "
 		email=str(row[7]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		banca=str(row[8]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
+		if banca.upper()=='NONE':
+			banca=" "
 		coordinate_banca=str(row[9]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
+		if coordinate_banca.upper()=='NONE':
+			coordinate_banca=" "
 		pagamento=str(row[10]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		fido=str(row[11]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		if fido=='None':
@@ -167,17 +175,25 @@ def sydb2():
 		email_b2b=str(row[14]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		note=str(row[15]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		note=note[:254]
+		if note.upper()=='NONE':
+			note=" "
 		indirizzo_sede=str(row[16]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		provincia_sede=str(row[17]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		comune_sede=str(row[18]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		cap_sede=str(row[19]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
+		if cap_sede.upper()=='NONE':
+			cap_sede=" "
 		codice_paese_sede=str(row[20]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		indirizzo_spedizione=str(row[21]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		provincia_spedizione=str(row[22]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		comune_spedizione=str(row[23]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		cap_spedizione=str(row[24]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
+		if cap_spedizione.upper()=='NONE':
+			cap_spedizione=" "
 		codice_paese_spedizione=str(row[25]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		agente=str(row[27]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
+		if agente.upper()=='NONE':
+			agente=" "
 		sigla_provincia_sede=str(row[28]).strip().replace("'"," ")#TOGLO GLI SPAZI BIANCHI
 		if sigla_provincia_sede=='None':
 			sigla_provincia_sede='ZZ'
@@ -186,10 +202,11 @@ def sydb2():
 			sigla_provincia_spedizione='ZZ'
 		data_registrazione=str(row[30])
 		data_acquisizione=str(row[26])
+		oggi=time.strftime('%Y-%m-%d')
 		if data_registrazione=='None':
-			data_registrazione='2018-01-01 00:00:00'
+			data_registrazione=oggi+' 00:00:00'
 		if data_acquisizione=='None':
-			data_acquisizione='2018-01-01 00:00:00'
+			data_acquisizione=oggi+' 00:00:00'
 		#############################################FINE DATI DA SYBASE#
 		
 		curs.execute("SELECT DG_PARTITAIVA FROM DIGI.TABUTE_CLIB2B WHERE MK_IDENTIFIC_B2B='"+id+"'")

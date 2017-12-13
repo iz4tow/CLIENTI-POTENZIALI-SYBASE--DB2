@@ -72,10 +72,11 @@ for row in rows: #per ogni riga
 		sigla_provincia_spedizione='ZZ'
 	data_registrazione=str(row[30])
 	data_acquisizione=str(row[26])
+	oggi=time.strftime('%Y-%m-%d')
 	if data_registrazione=='None':
-		data_registrazione='2018-01-01 00:00:00'
+		data_registrazione=oggi+' 00:00:00'
 	if data_acquisizione=='None':
-		data_acquisizione='2018-01-01 00:00:00'
+		data_acquisizione=oggi+' 00:00:00'
 	#############################################FINE DATI DA SYBASE#
 	
 	curs.execute("SELECT DG_PARTITAIVA FROM DIGI.TABUTE_CLIB2B WHERE MK_IDENTIFIC_B2B='"+id+"'")
