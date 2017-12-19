@@ -46,7 +46,23 @@ args='-Djava.class.path=%s' % jar
 jvm = jpype.getDefaultJVMPath()
 jpype.startJVM(jvm, args)
 jdbc_string="jdbc:db2://"+server+":"+porta+"/"+dbname
-conn=jaydebeapi.connect("com.ibm.db2.jcc.DB2Driver", jdbc_string,[user,password]) #connessione al db2
+try:
+	conn=jaydebeapi.connect("com.ibm.db2.jcc.DB2Driver", jdbc_string,[user,password]) #connessione al db2
+except:
+	app = gui("MIGRAZIONE CLIENTI POTENZIALI SYBASE IQ -> DB2", "600x300")
+	app.setBg("yellow")
+	app.setFont(18)
+	app.addLabel("title", "\nCLIENTI POTENZIALI SYBASE IQ -> DB2\n") #NOMELABEL, CONTENUTO
+	app.setLabelBg("title", "blue")#NOMELABEL, COLORE SFONDO
+	app.setLabelFg("title", "red") #NOME LABEL, COLORE CARATTERE
+	app.addLabel("errore","!!!ERRORE CONNESSIONE A DB!!!") #NOMELABEL, CONTENUTO
+	app.setLabelBg("errore", "yellow")#NOMELABEL, COLORE SFONDO
+	app.setLabelFg("errore", "red") #NOME LABEL, COLORE CARATTERE
+	app.addLabel("errore1","!!!Controllare il file setting.ini!!!") #NOMELABEL, CONTENUTO
+	app.setLabelBg("errore1", "yellow")#NOMELABEL, COLORE SFONDO
+	app.setLabelFg("errore1", "black") #NOME LABEL, COLORE CARATTERE
+	app.go()
+	sys.exit(1)
 curs=conn.cursor()
 #########FINE DB2
 
