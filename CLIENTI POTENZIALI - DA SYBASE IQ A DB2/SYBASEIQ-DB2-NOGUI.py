@@ -8,6 +8,34 @@ import decimal
 
 start_time = time.time()
 
+
+
+##############################################APERTURA FILE INI IMPOSAZIONI###############################################################
+file = open("setting.ini", "r") 
+for riga in file:
+	if riga.find("|")!=-1: #SOLO LE RIGHE DELLE IMPOSTAZIONI CHE CONTENGONO IL | VENGONO CONSIDERATE, GLI ALTRI SONO COMMENTI
+		riga=riga.replace(" ","") #TOGLO GLI SPAZI BIANCHI
+		impostazione,valore=riga.split("|"); #PRENDE IMPOSTAZIONE E VALORE IMPOSTAZIONE USANDO COME SEPARATORE I :
+		if impostazione=='server':
+			server=valore
+			server=server.replace("\n","")
+		if impostazione=='database':
+			dbname=valore
+			dbname=dbname.replace("\n","")
+		if impostazione=='porta':
+			porta=valore
+			porta=porta.replace("\n","")
+		if impostazione=='utente':
+			user=valore
+			user=user.replace("\n","")
+		if impostazione=='password':
+			password=valore
+			password=password.replace("\n","")
+		
+##############################################FINE FILE INI IMPOSAZIONI###################################################################
+
+
+
 #CONNESSIONE A SYBASE IQ
 cnxn = pyodbc.connect("DSN=melc6h1_dmcomm")
 cursiq = cnxn.cursor()
@@ -17,7 +45,8 @@ jar = 'db2jcc4.jar' # location of the jdbc driver jar
 args='-Djava.class.path=%s' % jar
 jvm = jpype.getDefaultJVMPath()
 jpype.startJVM(jvm, args)
-conn=jaydebeapi.connect('com.ibm.db2.jcc.DB2Driver', 'jdbc:db2://10.1.12.69:50000/s69mk0se',['db2inst1','db2inst1']) #connessione al db2
+jdbc_string="jdbc:db2://"+server+":"+porta+"/"+dbname
+conn=jaydebeapi.connect("com.ibm.db2.jcc.DB2Driver", jdbc_string,[user,password]) #connessione al db2
 curs=conn.cursor()
 #########FINE DB2
 
