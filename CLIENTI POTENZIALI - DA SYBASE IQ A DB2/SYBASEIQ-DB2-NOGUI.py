@@ -50,6 +50,7 @@ try:
 	conn=jaydebeapi.connect("com.ibm.db2.jcc.DB2Driver", jdbc_string,[user,password]) #connessione al db2
 except:
 	print ("ERRORE DI CONNESSIONE AL DB2")
+	print ("Controllare setting.ini")
 	print ("STRINGA DI CONNESSIONE UTILIZZATA:"+jdbc_string)
 	sys.exit(1)
 curs=conn.cursor()
