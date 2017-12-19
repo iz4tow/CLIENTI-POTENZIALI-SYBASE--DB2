@@ -46,7 +46,12 @@ args='-Djava.class.path=%s' % jar
 jvm = jpype.getDefaultJVMPath()
 jpype.startJVM(jvm, args)
 jdbc_string="jdbc:db2://"+server+":"+porta+"/"+dbname
-conn=jaydebeapi.connect("com.ibm.db2.jcc.DB2Driver", jdbc_string,[user,password]) #connessione al db2
+try:
+	conn=jaydebeapi.connect("com.ibm.db2.jcc.DB2Driver", jdbc_string,[user,password]) #connessione al db2
+except:
+	print ("ERRORE DI CONNESSIONE AL DB2")
+	print ("STRINGA DI CONNESSIONE UTILIZZATA:"+jdbc_string)
+	sys.exit(1)
 curs=conn.cursor()
 #########FINE DB2
 
@@ -146,7 +151,7 @@ for row in rows: #per ogni riga
 		try:##INSERISCO SOLO PIVA E CF POI AGGIORNO
 			curs.execute(query)
 		except:
-			print(query)
+			print(query+"IN ERRORE")
 		curs.execute("commit")
 		query="UPDATE DIGI.TABUTE_CLIB2B "
 		query=query+"SET MK_IDENTIFIC_B2B='"+id+"',MK_RAG_SOC='"+ragione_sociale+"',DG_PARTITAIVA='"+p_iva+"',DG_CF='"+cod_fiscale+"',MK_NUM_TELEF_L16='"+telefono+"',MK_NUM_FAX_6='"+fax+"',DG_E_MAIL='"+email+"',MK_BANCA_L48='"+banca+"',MK_COORDIN_BANCA='"+coordinate_banca+"',DG_CONPAG='"+pagamento+"',MK_IMPORTO_FIDO_1='"+fido+"',DG_DIVISIONE='"+divisione+"',MK_ACCESSO_B2B='"+accesso_b2b+"',DG_E_MAIL1='"+email+"',MK_DESCR_NOTE='"+note+"',"
